@@ -1,0 +1,30 @@
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <pattern>
+                    <pattern>
+                        {
+                        "level": "%level",
+                        "logger": "%logger",
+                        "thread": "%thread",
+                        "message": "%message"
+                        }
+                    </pattern>
+                </pattern>
+                <arguments/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_CONSOLE"/>
+    </root>
+
+</configuration>

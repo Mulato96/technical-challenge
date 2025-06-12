@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  test-productos:
+    image: maven:3.9-eclipse-temurin-17
+    container_name: test-productos
+    working_dir: /app
+    volumes:
+      - ./product:/app
+      - ~/.m2:/root/.m2      
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/compras_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    command: mvn verify
+    networks:
+      - microservicios_net
+
+  test-inventario:
+    image: maven:3.9-eclipse-temurin-17
+    container_name: test-inventario
+    working_dir: /app
+    volumes:
+      - ./inventory:/app
+      - ~/.m2:/root/.m2      
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/compras_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    command: mvn clean verify
+    networks:
+      - microservicios_net
