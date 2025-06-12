@@ -1,25 +1,26 @@
 package com.linktic.inventario.entity;
 
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "inventories")
-@Data
+@Table(name = "purchase_history")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Inventory {
-
+public class PurchaseHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long productId;
 
-    @Column(nullable = false)
     private Integer quantity;
+
+    private LocalDateTime purchaseDate;
 }

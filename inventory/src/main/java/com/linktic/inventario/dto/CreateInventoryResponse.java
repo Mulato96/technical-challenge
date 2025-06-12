@@ -1,25 +1,16 @@
-package com.linktic.inventario.entity;
+package com.linktic.inventario.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "inventories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Inventory {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CreateInventoryResponse {
     private Long id;
-
     private Long productId;
-
-    @Column(nullable = false)
     private Integer quantity;
 }

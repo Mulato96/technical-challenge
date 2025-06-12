@@ -2,9 +2,7 @@ package com.linktic.inventario.controller;
 
 import com.linktic.inventario.api.JsonApiResponse;
 import com.linktic.inventario.api.JsonApiUtils;
-import com.linktic.inventario.dto.InventoryRequest;
-import com.linktic.inventario.dto.InventoryResponse;
-import com.linktic.inventario.dto.PurchaseRequest;
+import com.linktic.inventario.dto.*;
 import com.linktic.inventario.service.InventoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +21,13 @@ public class InventoryController {
     public ResponseEntity<JsonApiResponse> getStock(@PathVariable Long productId) {
         InventoryResponse response = inventoryService.getStock(productId);
         return ResponseEntity.ok(JsonApiUtils.buildResponse("inventory", String.valueOf(response.getProductId()), response));
+    }
+
+    @PostMapping
+    public ResponseEntity<JsonApiResponse> saveStock(@RequestBody @Valid CreateInventoryRequest request) {
+        CreateInventoryResponse response = inventoryService.saveStock(request);
+        return ResponseEntity.status(201)
+                .body(JsonApiUtils.buildResponse("inventory", String.valueOf(response.getId()), response));
     }
 
     @PutMapping("/{productId}")
